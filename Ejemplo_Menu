@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include "stdalign.h"
 using namespace std;
 
 int suma(int a, int b);
@@ -8,8 +9,8 @@ int ciclo(int x);
 double pesototal(int cantidadProductos);
 
 int main() {
-	int opcion,a,b,c,result;
-
+	int opcion, a, b, c, result;
+	system("color A");
 	do {
 		cout << "1. La suma de dos numeros" << endl;
 		cout << "2. Determinar el mayor de tres números\n";
@@ -26,7 +27,7 @@ int main() {
 			cout << "Ingresar el segundo numero: ";
 			cin >> b;
 			result = suma(a, b); //Llamada de una funcion
-			cout << "El resultado es: " << result <<endl;
+			cout << "El resultado es: " << result << endl;
 			break;
 		}
 		case 2: {
@@ -46,9 +47,9 @@ int main() {
 			ciclo(x);
 			break;
 		}
-		case 4:{
+		case 4: {
 			int cantidad;
-			cout << "¿Cuántos productos deseas ingresar? ";
+			cout << "¿Cuantos productos deseas ingresar? ";
 			cin >> cantidad;
 			pesototal(cantidad);
 			break;
@@ -58,10 +59,11 @@ int main() {
 			return 0;
 			break;
 		default:
-			cout << "Opción no válida. Intenta de nuevo.\n";
+			cout << "Opcion no valida. Intenta de nuevo.\n";
 			break;
 		}
-
+		system("pause");
+		system("cls");	
 	} while (opcion != 0);
 
 	return 0;
@@ -75,15 +77,15 @@ int mayor(int a, int b, int c)
 		return a;
 	}
 	else if (a > b && a > c) {
-		cout << "El mayor número es: " << a << endl;
+		cout << "El mayor numero es: " << a << endl;
 		return a;
 	}
 	else if (b > a && b > c) {
-		cout << "El mayor número es: " << b << endl;
+		cout << "El mayor numero es: " << b << endl;
 		return b;
 	}
 	else {
-		cout << "El mayor número es: " << c << endl;
+		cout << "El mayor numero es: " << c << endl;
 		return c;
 	}
 }
