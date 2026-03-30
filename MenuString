@@ -1,0 +1,180 @@
+// Ejemplostring.cpp : Defines the entry point for the console application.
+//
+#include <iostream>
+#include "conio.h"
+#include <string>
+
+using namespace std;
+
+void EncontrarVocales() {
+	string nombre;
+	int cont = 0;
+	cout << "Ingrese un nombre: ";
+	getline(cin, nombre);
+	for (int i = 0; i < nombre.length(); i++)
+		if (nombre[i] == 'a' || nombre[i] == 'e' || nombre[i] == 'i' || nombre[i] == 'o' || nombre[i] == 'u')
+			cont++;
+	cout << "Numero de vocales: " << cont << endl;
+
+}
+
+void LongitudString() {
+	string nombre;
+	cout << "Ingrese un nombre: ";
+	getline(cin, nombre);
+	int longitud = nombre.length();
+	cout << "El string tiene: " << longitud << endl;
+}
+
+void ExtraerSubstring() {
+	string nombre;
+	int pos;
+	cout << "Ingrese un nombre: ";
+	getline(cin, nombre);
+	cout << "Ingrese desde donde desea extraer el substring: ";
+	cin >> pos;
+	cout << nombre.substr(pos, nombre.length() - pos) << endl;
+}
+void IntercambiarString() {
+	string nombre, var2;
+	cout << "Ingrese un nombre: ";
+	getline(cin, nombre);
+	var2 = nombre;
+	nombre.swap(var2);
+	cout << "Nombre: " << nombre << endl;
+	cout << "Var2: " << var2 << endl;
+}
+
+void CompararString() {
+	string nombre, var2;
+	cout << "Ingrese un nombre: ";
+	getline(cin, nombre);
+	cout << "Redigite el nombre: ";
+	getline(cin, var2);
+	if (nombre.compare(var2) == 0)
+		cout << "Los datos coinciden" << endl;
+	else
+		cout << nombre << " es diferente que " << var2 << endl;
+}
+
+void EncontrarCaracteres() {
+	string var2;
+	cout << "Ingrese un nombre: ";
+	getline(cin, var2);
+	int longitud = var2.length();
+	for (int i = 0; i < longitud; i++)
+		if (var2.at(i) == ' ')
+			cout << "Existe un espacio en: " << i << endl;
+}
+
+void InvertirFrase() {
+	string nombre, var2;
+	cout << "Ingrese una frase: ";
+	getline(cin, nombre);
+	var2 = nombre;
+	int longitud = nombre.length();
+	for (int i = 0; i < longitud / 2; i++)
+	{
+		char aux = nombre[i];
+		nombre[i] = nombre[longitud - 1 - i];
+		nombre[longitud - 1 - i] = aux;
+	}
+	cout << "La cadena invertida es: " << nombre << endl;
+	if (var2.compare(nombre) == 0)
+		cout << "Es un palindromo" << endl;
+}
+
+void DeterminarCapicua() {
+	string nombre, var2;
+	cout << "Ingrese una frase: ";
+	getline(cin, nombre);
+	var2 = nombre;
+	int longitud = nombre.length();
+	for (int i = 0; i < longitud / 2; i++)
+	{
+		char aux = nombre[i];
+		nombre[i] = nombre[longitud - 1 - i];
+		nombre[longitud - 1 - i] = aux;
+	}
+	if (var2.compare(nombre) == 0)
+		cout << "Es Capicua" << endl;
+	else
+		cout << "No es Capicua" << endl;
+}
+
+void QuitarVocales() {
+	string nombre, var2;
+	cout << "Ingrese una frase: ";
+	getline(cin, nombre);
+	var2 = nombre;
+	int cont = 0;
+	int longitud = nombre.length();
+	for (int i = 0; i < longitud; i++)
+		if (nombre[i] != 'a' && nombre[i] != 'e' && nombre[i] != 'i' && nombre[i] != 'o' && nombre[i] != 'u')
+		{
+			var2[cont] = nombre[i];
+			cont++;
+		}
+	var2[cont] = '\0'; // Agregar el carácter nulo al final de la cadena
+	cout << "Sin vocales es: " << var2 << endl;
+}
+
+int main()
+{
+	int longitud, cont, pos;
+	char aux;
+	int opcion;
+
+	string var1, var2, nombre;
+
+	do {
+		cout << "1. Encontrar vocales" << endl;
+		cout << "2. Longitud de un string" << endl;
+		cout << "3. Extraer substring" << endl;
+		cout << "4. Intercambiar string" << endl;
+		cout << "5. Comparar string" << endl;
+		cout << "6. Encontrar caracteres" << endl;
+		cout << "7. Invertir frase" << endl;
+		cout << "8. Determinar si es capicua" << endl;
+		cout << "9. Quitar vocales" << endl;
+		cout << "0. Salir" << endl;
+		cin >> opcion;
+
+		switch (opcion) {
+		case 1:
+			EncontrarVocales();
+			break;
+		case 2:
+			LongitudString();
+			break;
+		case 3:
+			ExtraerSubstring();
+			break;
+		case 4:
+			IntercambiarString();
+			break;
+		case 5:
+			CompararString();
+			break;
+		case 6:
+			EncontrarCaracteres();
+			break;
+		case 7:
+			InvertirFrase();
+			break;
+		case 8:
+			DeterminarCapicua();
+			break;
+		case 9:
+			QuitarVocales();
+			break;
+		case 0:
+			cout << "Saliendo del programa..." << endl;
+			break;
+		default:
+			cout << "Opción no válida." << endl;
+			break;
+		}
+	}
+	while (opcion != 0);
+}
