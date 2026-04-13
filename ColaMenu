@@ -1,0 +1,159 @@
+// .h //
+#ifndef QUEUE_H
+#define QUEUE_H
+
+#define MAX_SIZE 256
+
+typedef char almacen[MAX_SIZE];
+
+class Queue {
+
+private:
+    int cabeza;     // puntero de lectura
+    int cola;       // puntero de escritura
+    int ITEMS;      // número de elementos
+    int ITEMSIZE;   // tamaño de cada elemento
+    almacen alma;   // almacenamiento
+
+public:
+    // constructor
+    Queue();
+
+    // destructor
+    ~Queue();
+
+    int empty();     // verifica si está vacía
+    int put(int d);  // insertar
+    int get();       // retirar
+    int size();      // tamaño
+};
+
+#endif
+
+// .cpp // 
+#include "Queue.h"
+
+// constructor
+Queue::Queue() {
+    cabeza = 0;
+    cola = 0;
+    ITEMS = 0;
+    ITEMSIZE = 1;
+}
+
+// destructor
+Queue::~Queue() {}
+
+// verifica si está vacía
+int Queue::empty() {
+    return ITEMS == 0;
+}
+
+// insertar elemento
+int Queue::put(int d) {
+    if (ITEMS == MAX_SIZE) return -1;
+
+    if (cola >= MAX_SIZE) {
+        cola = 0;
+    }
+
+    alma[cola] = d;
+    cola++;
+    ITEMS++;
+
+    return d;
+}
+
+// retirar elemento
+int Queue::get() {
+    char d;
+
+    if (empty()) return -1;
+
+    if (cabeza >= MAX_SIZE) {
+        cabeza = 0;
+    }
+
+    d = alma[cabeza];
+    cabeza++;
+    ITEMS--;
+
+    return d;
+}
+
+// tamaño de la cola
+int Queue::size() {
+    return ITEMS;
+}
+
+// .main //
+    #include <iostream>
+    using namespace std;
+
+    #include "Queue.h"
+
+    int main() {
+        Queue q;
+        int opcion;
+        int dato;
+
+        do {
+            cout << "\n===== MENU COLA =====\n";
+            cout << "1. Insertar elemento (PUT)\n";
+            cout << "2. Retirar elemento (GET)\n";
+            cout << "3. Ver tamaño\n";
+            cout << "4. Ver si esta vacia\n";
+            cout << "5. Salir\n";
+            cout << "Seleccione una opcion: ";
+            cin >> opcion;
+
+            switch (opcion) {
+
+            case 1:
+                cout << "Ingrese un valor (numero o caracter): ";
+                cin >> dato;
+
+                if (q.put(dato) == -1) {
+                    cout << "Cola llena\n";
+                }
+                else {
+                    cout << "Insertado correctamente\n";
+                }
+                break;
+
+            case 2:
+                dato = q.get();
+
+                if (dato == -1) {
+                    cout << "Cola vacia\n";
+                }
+                else {
+                    cout << "Elemento retirado: " << (char)dato << endl;
+                }
+                break;
+
+            case 3:
+                cout << "Tamaño de la cola: " << q.size() << endl;
+                break;
+
+            case 4:
+                if (q.empty()) {
+                    cout << "La cola esta vacia\n";
+                }
+                else {
+                    cout << "La cola NO esta vacia\n";
+                }
+                break;
+
+            case 5:
+                cout << "Saliendo...\n";
+                break;
+
+            default:
+                cout << "Opcion invalida\n";
+            }
+
+        } while (opcion != 5);
+
+        return 0;
+    }
