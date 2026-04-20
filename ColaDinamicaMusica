@@ -1,0 +1,202 @@
+//.h
+#ifndef MUSICQUEUE_H
+#define MUSICQUEUE_H
+
+#include <string>
+using namespace std;
+
+class nodo {
+public:
+    int id;
+    string titulo;
+    string artista;
+    string album;
+    string duracion;
+    nodo* sig;
+};
+
+class MusicQueue {
+    nodo* frente;
+    nodo* final;
+public:
+    MusicQueue();
+    ~MusicQueue();                // Destructor para liberar memoria
+    void enqueue(int id, string titulo, string artista, string album, string duracion);
+    void dequeue();
+    void show();
+    void top();
+    void size();
+};
+//.cpp
+#include "MusicQueue.h"
+#include <iostream>
+#include <stdlib.h>
+using namespace std;
+
+MusicQueue::MusicQueue() {
+    frente = NULL;
+    final = NULL;
+}
+
+MusicQueue::~MusicQueue() {
+    nodo* temp;
+    while (frente != NULL) {
+        temp = frente;
+        frente = frente->sig;
+        delete temp;
+    }
+}
+
+void MusicQueue::enqueue(int id, string titulo, string artista, string album, string duracion) {
+    nodo* aux = new nodo;
+    aux->id = id;
+    aux->titulo = titulo;
+    aux->artista = artista;
+    aux->album = album;
+    aux->duracion = duracion;
+    aux->sig = NULL;
+
+    if (final != NULL)
+        final->sig = aux;
+    final = aux;
+
+    if (frente == NULL)
+        frente = aux;
+
+    cout << "Cancion encolada: " << titulo << " - " << artista << "\n";
+}
+
+void MusicQueue::dequeue() {
+    if (frente == NULL) {
+        system("cls");
+        cout << "\nLa cola esta vacia!\n\n";
+        system("pause");
+    }
+    else {
+        nodo* temp = frente;
+        frente = frente->sig;
+        if (frente == NULL) final = NULL;
+        system("cls");
+        cout << "\nReproduciendo y eliminando: [" << temp->id << "] "
+            << temp->titulo << " - " << temp->artista << "\n\n";
+        delete temp;
+        system("pause");
+    }
+}
+
+void MusicQueue::show() {
+    nodo* aux = frente;
+    if (frente == NULL) {
+        system("cls");
+        cout << "\nLa cola esta vacia!\n\n";
+        system("pause");
+    }
+    else {
+        system("cls");
+        cout << "========== COLA DE REPRODUCCION ==========\n\n";
+        while (aux != NULL) {
+            cout << "[" << aux->id << "] " << aux->titulo
+                << "\n    Artista : " << aux->artista
+                << "\n    Album   : " << aux->album
+                << "\n    Duracion: " << aux->duracion
+                << "\n\n";
+            aux = aux->sig;
+        }
+        system("pause");
+    }
+}
+
+void MusicQueue::top() {
+    if (frente == NULL) {
+        system("cls");
+        cout << "\nLa cola esta vacia!\n\n";
+        system("pause");
+    }
+    else {
+        system("cls");
+        cout << "=== SIGUIENTE EN REPRODUCIR ===\n\n";
+        cout << "[" << frente->id << "] " << frente->titulo
+            << "\n    Artista : " << frente->artista
+            << "\n    Album   : " << frente->album
+            << "\n    Duracion: " << frente->duracion << "\n\n";
+        system("pause");
+    }
+}
+
+void MusicQueue::size() {
+    nodo* aux = frente;
+    if (frente == NULL) {
+        system("cls");
+        cout << "\nLa cola esta vacia!\n\n";
+        system("pause");
+    }
+    else {
+        int contador = 0;
+        while (aux) {
+            contador++;
+            aux = aux->sig;
+        }
+        system("cls");
+        cout << "Canciones en cola: '" << contador << "'\n\n";
+        system("pause");
+    }
+}
+//main
+#include <iostream>
+#include <stdlib.h>
+#include "MusicQueue.h"
+using namespace std;
+
+int main() {
+    MusicQueue q;
+    int opcion;
+
+    // 5 canciones precargadas
+    q.enqueue(1, "Blinding Lights", "The Weeknd", "After Hours", "3:20");
+    q.enqueue(2, "As It Was", "Harry Styles", "Harry's House", "2:37");
+    q.enqueue(3, "Levitating", "Dua Lipa", "Future Nostalgia", "3:23");
+    q.enqueue(4, "Stay", "Kid LAROI & Bieber", "F*CK LOVE 3", "2:21");
+    q.enqueue(5, "Heat Waves", "Glass Animals", "Dreamland", "3:59");
+
+    do {
+        system("cls");
+        cout << "[:]Cola de Musica - Estilo Spotify\n\n";
+        cout << "[1] Encolar cancion\n";
+        cout << "[2] Reproducir (Dequeue)\n";
+        cout << "[3] Ver cola completa\n";
+        cout << "[4] Ver siguiente cancion\n";
+        cout << "[5] Tamano de la cola\n";
+        cout << "[0] Salir\n";
+        cout << "\nIngresa tu opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+        case 1: {
+            int id;
+            string titulo, artista, album, duracion;
+            system("cls");
+            cout << "ID: ";       cin >> id;
+            cin.ignore();
+            cout << "Titulo: ";   getline(cin, titulo);
+            cout << "Artista: ";  getline(cin, artista);
+            cout << "Album: ";    getline(cin, album);
+            cout << "Duracion: "; getline(cin, duracion);
+            q.enqueue(id, titulo, artista, album, duracion);
+            system("pause");
+            break;
+        }
+        case 2: q.dequeue(); break;
+        case 3: q.show();    break;
+        case 4: q.top();     break;
+        case 5: q.size();    break;
+        case 0: return 0;
+        default:
+            cout << "Opcion invalida.\n";
+            system("pause");
+        }
+    } while (opcion != 0);
+
+    return 0;
+}
+
+#endif
